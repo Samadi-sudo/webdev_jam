@@ -27,11 +27,11 @@ export default function AuthPage() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        router.push('/dashboard');
+        router.push('/trips_available');
       }
     };
     checkUser();
-  }, [supabase.auth, router]);
+  }, [supabase, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -56,7 +56,8 @@ export default function AuthPage() {
         if (error) throw error;
         
         setMessage({ type: 'success', text: 'Successfully signed in!' });
-        router.push('/dashboard');
+        router.refresh(); // Refresh to update auth state
+        router.push('/trips_available');
       } else {
         // Sign up
         const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -77,15 +78,9 @@ export default function AuthPage() {
             text: 'Account created successfully! Please check your email for verification.' 
           });
           
-          // Auto sign in after signup
-          const { error: signInError } = await supabase.auth.signInWithPassword({
-            email: formData.email,
-            password: formData.password,
-          });
-
-          if (!signInError) {
-            router.push('/dashboard');
-          }
+          // Don't auto sign in after signup - let them verify email first
+          setIsLogin(true);
+          setFormData(prev => ({ ...prev, password: '' }));
         }
       }
     } catch (error: any) {
@@ -189,6 +184,7 @@ export default function AuthPage() {
             onClick={() => {
               setIsLogin(!isLogin);
               setMessage(null);
+              setFormData(prev => ({ ...prev, password: '' }));
             }}
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
