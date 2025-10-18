@@ -94,12 +94,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-sm border p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Student Delivery
-          </h1>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <span className="text-green-600 text-4xl">🛍️</span>
+            <h1 className="text-3xl font-bold text-gray-900">
+              1337 Delivery
+            </h1>
+          </div>
           <p className="text-gray-600">
             {isLogin ? 'Sign in to your account' : 'Create your account'}
           </p>
@@ -113,7 +116,12 @@ export default function AuthPage() {
                 : 'bg-red-50 text-red-800 border border-red-200'
             }`}
           >
-            {message.text}
+            <div className="flex items-center gap-2">
+              <span className="text-lg">
+                {message.type === 'success' ? '✅' : '❌'}
+              </span>
+              {message.text}
+            </div>
           </div>
         )}
 
@@ -130,7 +138,7 @@ export default function AuthPage() {
                 required={!isLogin}
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
                 placeholder="Enter your full name"
               />
             </div>
@@ -147,7 +155,7 @@ export default function AuthPage() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
               placeholder="Enter your email"
             />
           </div>
@@ -163,7 +171,7 @@ export default function AuthPage() {
               required
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
               placeholder="Enter your password"
               minLength={6}
             />
@@ -172,7 +180,7 @@ export default function AuthPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+            className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
           >
             {loading ? 'Processing...' : isLogin ? 'Sign In' : 'Create Account'}
           </button>
@@ -186,7 +194,7 @@ export default function AuthPage() {
               setMessage(null);
               setFormData(prev => ({ ...prev, password: '' }));
             }}
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="text-green-600 hover:text-green-700 font-medium"
           >
             {isLogin
               ? "Don't have an account? Sign up"
